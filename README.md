@@ -1,1 +1,0 @@
-# gpay-dmpett-dgtall
