@@ -694,3 +694,55 @@ body{
 
     z-index:1;
 }
+
+/* CONTAINER */
+.container{
+    width:100%;
+    max-width:430px;
+    margin:auto;
+    min-height:100vh;
+    padding:22px 20px 50px;
+    text-align:left;
+}
+
+/* LOGO */
+.logo-wrap{
+    width:100%;
+    display:flex;
+    justify-content:flex-start;
+    margin-top:20px;
+    margin-bottom:45px;
+    position:relative;
+}
+
+/* Hapus glow agar tetap di kiri */
+.logo-wrap::before{
+    left:0;
+    transform:none;
+}
+
+/* TITLE */
+.title{
+    width:100%;
+    margin:0 0 24px;
+    text-align:left;
+}
+
+/* INPUT */
+.input-box{
+    width:100%;
+    max-width:none;
+    margin:0 0 22px;
+}
+
+/* DESKRIPSI */
+.desc{
+    width:100%;
+    margin:0 0 30px;
+    text-align:left;
+}
+
+/* TOMBOL */
+.btn{
+    width:100%;
+}
