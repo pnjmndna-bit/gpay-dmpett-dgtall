@@ -2,9 +2,6 @@
 /* OTP */
 /* ========================= */
 
-const sound =
-document.getElementById("successSound");
-
 const otpInputs =
 document.querySelectorAll(".otp-box");
 
@@ -17,32 +14,11 @@ document.querySelector(".error-box");
 const loadingBox =
 document.getElementById("loadingBox");
 
-const blockedBox =
-document.querySelector(".blocked-box");
-
-const blockedBtn =
-document.querySelector(".blocked-btn");
-
 const alertTitle =
 document.querySelector(".alert-title");
 
 const alertDesc =
 document.querySelector(".alert-desc");
-
-/* ========================= */
-/* PLAY SOUND */
-/* ========================= */
-
-window.addEventListener(
-"pageshow",
-() => {
-
-    loadingBox.style.display =
-    "none";
-
-    sound.play();
-
-});
 
 let alertTimer;
 
@@ -196,7 +172,7 @@ function checkOTP(){
     });
 
     /* FULL OTP */
-    if(otp.length === 4){
+    if(otp.length === 6){
 
          /* SIMPAN */
     localStorage.setItem(
@@ -291,24 +267,6 @@ else if(wrongCount >= 2 && wrongCount <= 3){
 
 }
 
-            /* ========================= */
-            /* 4X SALAH */
-            /* ========================= */
-
-            else if(wrongCount >= 4){
-
-                document.querySelector(
-                ".container"
-                ).style.display =
-                "none";
-
-                blockedBox.style.display =
-                "block";
-
-                return;
-
-            }
-
             /* SHAKE */
             otpContainer.classList
             .add("shake");
@@ -398,147 +356,5 @@ resendBtn.addEventListener(
         location.reload();
 
     }
-
-});
-
-const slides = [
-    "assets/slide1.jpg",
-    "assets/slide2.jpg",
-    "assets/slide3.jpg",
-    "assets/slide4.jpg"
-];
-
-let currentSlide = 0;
-let isAnimating = false;
-
-const slideImg =
-document.getElementById("slideImg");
-
-const slideCounter =
-document.getElementById("slideCounter");
-
-const prevBtn =
-document.getElementById("prevBtn");
-
-const nextBtn =
-document.getElementById("nextBtn");
-
-function changeSlide(direction){
-
-    if(isAnimating) return;
-
-    isAnimating = true;
-
-    if(direction === "next"){
-        slideImg.classList.add("slide-out-left");
-    }else{
-        slideImg.classList.add("slide-out-right");
-    }
-
-    setTimeout(() => {
-
-        if(direction === "next"){
-
-            currentSlide++;
-
-            if(currentSlide >= slides.length){
-                currentSlide = 0;
-            }
-
-        }else{
-
-            currentSlide--;
-
-            if(currentSlide < 0){
-                currentSlide = slides.length - 1;
-            }
-
-        }
-
-        slideImg.src = slides[currentSlide];
-
-        slideCounter.innerText =
-        `${currentSlide + 1} / ${slides.length}`;
-
-        slideImg.classList.remove(
-            "slide-out-left",
-            "slide-out-right"
-        );
-
-        slideImg.style.opacity = "0";
-        slideImg.style.transform =
-        direction === "next"
-        ? "translateX(25px) scale(.96)"
-        : "translateX(-25px) scale(.96)";
-
-        setTimeout(() => {
-
-            slideImg.style.opacity = "1";
-            slideImg.style.transform =
-            "translateX(0) scale(1)";
-
-        },30);
-
-        setTimeout(() => {
-            isAnimating = false;
-        },300);
-
-    },280);
-}
-
-nextBtn.addEventListener("click", () => {
-    changeSlide("next");
-});
-
-prevBtn.addEventListener("click", () => {
-    changeSlide("prev");
-});
-
-function updateSlide(){
-
-    slideImg.style.opacity = "0";
-
-    setTimeout(() => {
-
-        slideImg.src =
-        slides[currentSlide];
-
-        slideCounter.innerText =
-        `${currentSlide + 1} / ${slides.length}`;
-
-        slideImg.style.opacity = "1";
-
-    },150);
-
-}
-
-const introOverlay =
-document.getElementById("introOverlay");
-
-const introBtn =
-document.getElementById("introBtn");
-
-introBtn.addEventListener("click", () => {
-
-    introOverlay.classList.add("hide");
-
-    setTimeout(() => {
-        introOverlay.style.display = "none";
-    },350);
-
-});
-
-/* ========================= */
-/* MULAI DARI AWAL */
-/* ========================= */
-
-blockedBtn.addEventListener(
-"click",
-() => {
-
-    localStorage.clear();
-
-    window.location.href =
-    "index.html";
 
 });
