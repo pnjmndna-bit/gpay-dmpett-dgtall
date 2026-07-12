@@ -1229,3 +1229,110 @@ body{
 
     z-index:1;
 }
+
+/* ========================= */
+/* OVERRIDE RATA KIRI */
+/* ========================= */
+
+/* CONTAINER UTAMA */
+.container{
+    padding-left:24px;
+    padding-right:24px;
+    text-align:left;
+}
+
+/* LOGO RATA KIRI */
+.logo-wrap{
+    justify-content:flex-start;
+}
+
+/* GLOW IKUT POSISI LOGO */
+.logo-wrap::before{
+    left:-18px;
+}
+
+/* JUDUL RATA KIRI */
+.title{
+    width:100%;
+    text-align:left;
+}
+
+/* NOMOR HP RATA KIRI */
+.number-box{
+    width:100%;
+    max-width:300px;
+
+    margin-left:0;
+    margin-right:0;
+}
+
+/* PILIHAN VIA WA / SMS RATA KIRI */
+.via{
+    justify-content:flex-start;
+}
+
+/* OTP RATA KIRI */
+.otp-container{
+    justify-content:flex-start;
+}
+
+/* KIRIM ULANG RATA KIRI */
+.resend-box{
+    margin-left:0;
+    margin-right:0;
+}
+
+/* GUIDE TETAP LEBAR, TAPI POSISI DARI KIRI */
+.guide-box{
+    width:100%;
+    margin-left:0;
+    margin-right:0;
+}
+
+/* JUDUL GUIDE RATA KIRI */
+.guide-box h3{
+    text-align:left;
+}
+
+/* HALAMAN BLOKIR */
+.blocked-box{
+    width:100%;
+    margin-left:0;
+    margin-right:0;
+}
+
+/* ISI BLOCKED TETAP TENGAH */
+.blocked-title,
+.blocked-desc{
+    text-align:center;
+}
+
+/* BAGIAN YANG TETAP DI TENGAH */
+.slide-box,
+.slide-counter,
+.intro-card,
+.loading-box{
+    text-align:center;
+}
+
+/* ALERT TETAP RATA KIRI */
+.alert-box{
+    text-align:left;
+}
+
+@media(max-width:380px){
+
+    .container{
+        padding-left:18px;
+        padding-right:18px;
+    }
+
+    .otp-container{
+        gap:7px;
+    }
+
+    .otp-box{
+        width:38px;
+        height:44px;
+    }
+}
