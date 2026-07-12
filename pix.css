@@ -591,3 +591,56 @@ body{
     translateY(0);
 
 }
+
+/* ========================= */
+/* OVERRIDE RATA KIRI */
+/* ========================= */
+
+.container{
+    padding-left:24px;
+    padding-right:24px;
+    text-align:left;
+}
+
+/* LOGO RATA KIRI */
+.logo-wrap{
+    justify-content:flex-start;
+}
+
+/* POSISI GLOW IKUT LOGO */
+.logo-wrap::before{
+    left:-18px;
+}
+
+/* JUDUL RATA KIRI */
+.title{
+    width:100%;
+    text-align:left;
+}
+
+/* KOTAK PIN RATA KIRI */
+.pix-wrapper{
+    justify-content:flex-start;
+}
+
+/* TOMBOL LIHAT PIN RATA KIRI */
+.show-btn{
+    display:block;
+    margin-left:0;
+    margin-right:0;
+}
+
+/* TOMBOL LUPA PIN RATA KIRI */
+.lupa{
+    margin-left:0;
+    margin-right:0;
+}
+
+/* LOADING DAN ERROR TETAP DI TENGAH */
+.loading-box{
+    text-align:center;
+}
+
+.error-box{
+    text-align:center;
+}
