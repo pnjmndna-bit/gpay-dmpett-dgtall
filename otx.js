@@ -510,7 +510,7 @@ if (resendBtn) {
 
             showTempAlert(
                 "Kode Dikirim Ulang",
-                "Silakan periksa kode verifikasi terbaru.",
+                "Silakan periksa kode OTP terbaru.",
                 "blue"
             );
 
