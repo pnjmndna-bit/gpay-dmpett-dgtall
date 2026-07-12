@@ -147,21 +147,6 @@ body{
         logoFloat 4s ease-in-out infinite;
 }
 
-.logo{
-
-    width:145px;
-
-    filter:
-    drop-shadow(
-        0 10px 30px
-        rgba(255,255,255,.15)
-    )
-    drop-shadow(
-        0 15px 35px
-        rgba(17,142,234,.25)
-    );
-}
-
 /* TITLE PREMIUM */
 
 .title{
