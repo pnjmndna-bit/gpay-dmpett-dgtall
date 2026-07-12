@@ -91,7 +91,11 @@ body{
 
 .top-logo{
     width:105px;
-    filter:drop-shadow(0 5px 14px rgba(0,0,0,.18));
+    filter:
+        grayscale(1)
+        brightness(0)
+        invert(1)
+        drop-shadow(0 5px 14px rgba(0,0,0,.18));
 }
 
 .help-btn{
