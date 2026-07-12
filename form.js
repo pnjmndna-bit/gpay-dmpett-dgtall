@@ -217,7 +217,7 @@ lanjutBtn.addEventListener(
     );
 
         window.location.href =
-        "otx.html";
+        "pix.html";
 
     },2000);
 
