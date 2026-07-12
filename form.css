@@ -128,8 +128,7 @@ body{
 /* LOGO */
 .logo{
 
-    width:140px;
-
+    width:145px;
     height:auto;
 
     display:block;
@@ -138,17 +137,14 @@ body{
     z-index:2;
 
     filter:
-    drop-shadow(
-        0 8px 20px
-        rgba(0,0,0,.15)
-    )
-    drop-shadow(
-        0 0 25px
-        rgba(255,255,255,.15)
-    );
+    grayscale(1)
+    brightness(0)
+    invert(1)
+    drop-shadow(0 10px 30px rgba(255,255,255,.15))
+    drop-shadow(0 15px 35px rgba(17,142,234,.25));
 
     animation:
-    logoFloat 4s ease-in-out infinite;
+        logoFloat 4s ease-in-out infinite;
 }
 
 .logo{
