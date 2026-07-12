@@ -1148,6 +1148,11 @@ body{
 
     z-index:2;
 
+    filter:
+        grayscale(1)
+        brightness(0)
+        invert(1);
+
     animation:
     pulseLogo 1.5s ease-in-out infinite;
 }
